@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="15dp"
+    app:cardCornerRadius="12dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginEnd="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/dida"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/trip_title_layout"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/trip">
+
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+
+            <TextView
+                android:id="@+id/trip_view_trip_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:textSize="17sp"
+                android:fontFamily="@font/amaranth"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:text="Trip Name"/>
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_below="@id/trip_title_layout"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:weightSum="10"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_weight="4"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/date_image"
+                    android:layout_weight="1"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:id="@+id/trip_view_trip_date"
+                    android:textSize="15sp"
+                    android:textColor="#4CAF50"
+                    android:text="15.11.2003"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/people_image"/>
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:id="@+id/trip_view_trip_person"
+                    android:textColor="#4CAF50"
+                    android:textSize="15sp"
+                    android:text="12"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/money_image"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/trip_view_trip_cost"
+                    android:textSize="15sp"
+                    android:textColor="#4CAF50"
+                    android:text="1400.00"/>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

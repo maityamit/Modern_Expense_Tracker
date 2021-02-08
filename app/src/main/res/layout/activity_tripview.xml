@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TripviewActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#2180F3">
+
+            <TextView
+                android:id="@+id/trp_view_activity_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trip Name"
+                android:paddingStart="5dp"
+                android:layout_marginBottom="15dp"
+                android:layout_alignParentStart="true"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/end_trip_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/end_trp_button"
+                android:padding="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:paddingStart="10dp"
+                android:layout_centerVertical="true"
+                android:paddingEnd="10dp"
+                android:layout_alignParentEnd="true"
+                android:text="End Trip"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/trp_view_activity_member"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/arvo"
+            android:text="Trip Members"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:gravity="center_vertical"
+            android:weightSum="4"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Trip_View_Member_RecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3">
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+            <LinearLayout
+                android:id="@+id/Add_Freind_Layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/person_add"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@android:color/black"
+                    android:text="Add"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/arvo"
+            android:text="Trip Expense"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+
+
+
+        <TextView
+            android:id="@+id/trp_view_activity_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/trip_total_money"
+            android:padding="8dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Total: 1000.00"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/history_layout"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/arvo"
+                android:text="Trip History"
+                android:textColor="@android:color/black"
+                android:textSize="17sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/trp_view_activity_Recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:orientation="vertical"
+            android:id="@+id/money_layout"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/dida"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/sigmar_one"
+                android:text="Add money"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/add_money_custom_money_edittext"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:hint="Money Amount"
+                android:paddingStart="5dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/quary_input"
+                android:inputType="numberDecimal"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="15dp"/>
+            <EditText
+                android:id="@+id/add_money_custom_money_purpose_edittext"
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:hint="Money Use Purpose"
+                android:paddingStart="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/quary_input"
+                android:inputType="textShortMessage"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"/>
+
+
+            <Button
+                android:id="@+id/add_money_submit_butyyon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginBottom="10dp"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:layout_marginEnd="20dp"/>
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/trip_add_money_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="25sp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="25sp"
+        app:icon="@drawable/add_money"
+        android:text="Add money"
+        android:textAllCaps="false"
+        android:textSize="16sp">
+
+
+    </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
+
+
+
+</RelativeLayout>

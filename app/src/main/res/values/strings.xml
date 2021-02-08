@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Expense Tracker</string>
+    <string name="forgotpasssworddetails">Enter Your email address below and a password set up link will send to you shortly in your email</string>
+    <string name="signinunderline"><u>Sign In</u></string>
+    <string name="signupunderline"><u>Sign up</u></string>
+    <string name="termsperivacystring">By signing up, you agree to our  <u>Terms of Use</u> and <u>Privacy Policy</u></string>
+
+</resources>

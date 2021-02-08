@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "862792078487",
+    "project_id": "modern-expense-tracker",
+    "storage_bucket": "modern-expense-tracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862792078487:android:6413dbbb419d36474cc5d2",
+        "android_client_info": {
+          "package_name": "modernexpensetrackerbyamitmaity.example.modernexpensetracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862792078487-4g08uki0gab7p9be03mmrmu2u7jra4vc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA55n4iy1JnZhisFDB2l3LqrUgbkLhDNbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862792078487-4g08uki0gab7p9be03mmrmu2u7jra4vc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
