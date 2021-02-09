@@ -151,7 +151,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
-                        android:text="My Upcoming Trip"
+                        android:text="My Trip"
                         android:textSize="16dp"
                         android:textColor="#FFFFFF"
                         android:gravity="center"/>

@@ -68,6 +68,16 @@
     </androidx.recyclerview.widget.RecyclerView>
 
 
+    <ImageView
+        android:id="@+id/no_trip"
+        android:visibility="gone"
+        android:layout_below="@id/amar_bapi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/no_trip"
+        android:scaleType="fitXY"/>
+
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/create_button"
         android:layout_width="wrap_content"

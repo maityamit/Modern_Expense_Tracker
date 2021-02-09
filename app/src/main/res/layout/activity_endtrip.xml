@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/dida"
+    tools:context=".EndtripActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/input_background_black"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textSize="16dp"
+            android:text="Total Cost"
+            android:textColor="#FFFFFF"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/end_trip_total_cost"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:text="5000.00"
+            android:gravity="start|center_vertical"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/white" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/input_background_black"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textSize="16dp"
+            android:text="Each Freind Cost"
+            android:textColor="#FFFFFF"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/end_trip_each_cost"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:text="100.00"
+            android:gravity="start|center_vertical"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/white" />
+
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/end_tripsorrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hmmrecycle_end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hmmrecycle_endfalse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+
+       <Button
+           android:id="@+id/submit_button"
+           android:layout_width="wrap_content"
+           android:layout_alignParentStart="true"
+           android:layout_marginStart="20dp"
+           android:text="Finish"
+           android:textAllCaps="false"
+           android:layout_height="wrap_content"/>
+
+       <Button
+           android:id="@+id/print_button"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Take a Copy"
+           android:textAllCaps="false"
+           android:layout_alignParentEnd="true"
+           android:layout_marginEnd="20dp"/>
+
+   </RelativeLayout>
+
+</LinearLayout>

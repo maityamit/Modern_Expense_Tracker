@@ -41,7 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class TripviewActivity extends AppCompatActivity {
 
     private TextView end_trip,trip_name,trip_cost,trip_person;
-    private String trip_key;
+    private String trip_key,fg="0.0";
     private RecyclerView History,Memberlist,hmmrecycle,hmmrecycle4;
     private DatabaseReference RootRef,ChatRef,MemberRef,MainRef,CostRef;
     private LinearLayout history_layout,money_layout;
@@ -97,6 +97,7 @@ public class TripviewActivity extends AppCompatActivity {
         hmmrecycle4.setLayoutManager(new LinearLayoutManager(TripviewActivity.this));
 
         RetriveAllMoney();
+
         end_trip = findViewById(R.id.end_trip_button);
         trip_add_money_buton = findViewById(R.id.trip_add_money_button);
         trip_add_money_buton.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +107,7 @@ public class TripviewActivity extends AppCompatActivity {
             }
         });
 
-
+        RetriveAlltheData();
 
 
         yes.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +143,8 @@ public class TripviewActivity extends AppCompatActivity {
                             @Override
                             public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
 
+                                GoToENDTRIPACT();
+
                             }
 
 
@@ -168,7 +171,15 @@ public class TripviewActivity extends AppCompatActivity {
             }
         });
 
-        RetriveAlltheData();
+
+
+    }
+
+    private void GoToENDTRIPACT() {
+
+        Intent intentj = new Intent(TripviewActivity.this,EndtripActivity.class);
+        intentj.putExtra("TRIPKEYID",trip_key);
+        startActivity(intentj);
 
     }
 
@@ -389,7 +400,7 @@ public class TripviewActivity extends AppCompatActivity {
                                                 FirebaseRecyclerAdapter<MainMoneyModel, StudentViewHolderP> adaptt =
                                                         new FirebaseRecyclerAdapter<MainMoneyModel,StudentViewHolderP> (optionamitt) {
                                                             @Override
-                                                            protected void onBindViewHolder(@NonNull final StudentViewHolderP holder, final int position, @NonNull final MainMoneyModel model) {
+                                                            protected void onBindViewHolder(@NonNull final StudentViewHolderP holderr, final int position, @NonNull final MainMoneyModel model) {
 
 
 
@@ -410,9 +421,9 @@ public class TripviewActivity extends AppCompatActivity {
 
                                                                         }
 
-                                                                        String fg = String.valueOf(sum);
+                                                                        fg = String.valueOf(sum);
 
-                                                                        CreateALertDialog(fg);
+                                                                        holder.name.setText ( retrieveUserNAmeer +"\n\n₹:"+fg+"0\n");
 
 
 
@@ -427,14 +438,6 @@ public class TripviewActivity extends AppCompatActivity {
                                                                         Toast.makeText(TripviewActivity.this, "Error !", Toast.LENGTH_SHORT).show();
                                                                     }
                                                                 } );
-
-
-
-
-
-
-
-
 
 
                                                             }
@@ -575,27 +578,6 @@ public class TripviewActivity extends AppCompatActivity {
 
     }
 
-    private void CreateALertDialog(String fg) {
-
-        new AlertDialog.Builder(TripviewActivity.this)
-                .setTitle("His/ Her Total Spend is :")
-                .setMessage("₹: "+fg+"0")
-
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-                    }
-                })
-
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-
-
-    }
 
 
     public static class StudentViewHolderX extends  RecyclerView.ViewHolder

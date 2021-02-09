@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private String currentUserID;
     private DatabaseReference UserRef,MainRef,RootRef;
     private ProgressDialog progressDialog;
+    private ImageView imageView1;
     String fg = "0.0";
     private CircleImageView circleImageView;
     private TextView Expensetracker;
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void INITIALIZATIONFN() {
+        imageView1 = findViewById(R.id.no_trip);
         progressDialog = new ProgressDialog( MainActivity.this);
         progressDialog.setContentView ( R.layout.loading );
         circleImageView = findViewById(R.id.Home_Profile_Image);
@@ -155,88 +157,129 @@ public class MainActivity extends AppCompatActivity {
 
             progressDialog.show();
 
-            FirebaseRecyclerOptions<DODModel> optionsss =
-                    new FirebaseRecyclerOptions.Builder<DODModel> ()
-                            .setQuery ( DODREF,DODModel.class )
-                            .build ();
 
-
-            FirebaseRecyclerAdapter<DODModel, StudentViewHolderX> adapterrr =
-                    new FirebaseRecyclerAdapter<DODModel, StudentViewHolderX> (optionsss) {
+            DODREF.addValueEventListener ( new ValueEventListener() {
                         @Override
-                        protected void onBindViewHolder(@NonNull final StudentViewHolderX holder, final int position, @NonNull final DODModel model) {
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            progressDialog.show();
+                            int r  = (int)dataSnapshot.getChildrenCount();
 
+                            if (r==0)
+                            {
+                                imageView1.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+                                progressDialog.dismiss();
+                            }
+                            else
+                            {
+                                progressDialog.show();
 
-                            String st = model.getID();
-
-                            MainRef.child ( "AllTrip" ).child ( st )
-                                    .addValueEventListener ( new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-
-
-                                            String stringkey = getRef(position).getKey().toString();
-                                            String retrieveUserNAme = dataSnapshot.child ( "TripName" ).getValue ().toString ();
-                                            String retrieveEmail = dataSnapshot.child ( "TripDate" ).getValue ().toString ();
-                                            String stringperson = String.valueOf((int)dataSnapshot.child("Member").getChildrenCount());
-
-                                            holder.name.setText(retrieveUserNAme);
-                                            holder.date.setText(retrieveEmail);
-                                            holder.person.setText(stringperson);
+                                FirebaseRecyclerOptions<DODModel> optionsss =
+                                        new FirebaseRecyclerOptions.Builder<DODModel> ()
+                                                .setQuery ( DODREF,DODModel.class )
+                                                .build ();
 
 
+                                FirebaseRecyclerAdapter<DODModel, StudentViewHolderX> adapterrr =
+                                        new FirebaseRecyclerAdapter<DODModel, StudentViewHolderX> (optionsss) {
+                                            @Override
+                                            protected void onBindViewHolder(@NonNull final StudentViewHolderX holder, final int position, @NonNull final DODModel model) {
+
+                                                progressDialog.show();
 
 
-                                            progressDialog.dismiss();
 
-                                            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    Intent intenti = new Intent(MainActivity.this,TripviewActivity.class);
-                                                    intenti.putExtra("TRIPID",stringkey);
-                                                    startActivity(intenti);
-                                                }
-                                            });
-                                        }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                            progressDialog.dismiss();
-                                            Toast.makeText(MainActivity.this, "Error !", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } );
 
+
+
+                                                String st = model.getID();
+
+                                                MainRef.child ( "AllTrip" ).child ( st )
+                                                        .addValueEventListener ( new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+
+
+                                                                String stringkey = getRef(position).getKey().toString();
+                                                                String retrieveUserNAme = dataSnapshot.child ( "TripName" ).getValue ().toString ();
+                                                                String retrieveEmail = dataSnapshot.child ( "TripDate" ).getValue ().toString ();
+                                                                String stringperson = String.valueOf((int)dataSnapshot.child("Member").getChildrenCount());
+
+                                                                holder.name.setText(retrieveUserNAme);
+                                                                holder.date.setText(retrieveEmail);
+                                                                holder.person.setText(stringperson);
+
+
+
+
+                                                                progressDialog.dismiss();
+
+                                                                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(View v) {
+                                                                        Intent intenti = new Intent(MainActivity.this,TripviewActivity.class);
+                                                                        intenti.putExtra("TRIPID",stringkey);
+                                                                        startActivity(intenti);
+                                                                    }
+                                                                });
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                progressDialog.dismiss();
+                                                                Toast.makeText(MainActivity.this, "Error !", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        } );
+
+
+
+                                            }
+
+                                            @NonNull
+                                            @Override
+                                            public StudentViewHolderX onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+                                                View view  = LayoutInflater.from ( viewGroup.getContext () ).inflate ( R.layout.trip_view_layout,viewGroup,false );
+                                                StudentViewHolderX viewHolder  = new StudentViewHolderX (  view);
+                                                return viewHolder;
+
+                                            }
+
+                                            @Override
+                                            public int getItemCount() {
+
+
+                                                return super.getItemCount();
+                                            }
+
+
+
+                                        };
+                                recyclerView.setAdapter ( adapterrr );
+
+                                adapterrr.startListening ();
+
+
+
+
+                            }
 
 
                         }
 
-                        @NonNull
                         @Override
-                        public StudentViewHolderX onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-                            View view  = LayoutInflater.from ( viewGroup.getContext () ).inflate ( R.layout.trip_view_layout,viewGroup,false );
-                            StudentViewHolderX viewHolder  = new StudentViewHolderX (  view);
-                            return viewHolder;
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                            progressDialog.dismiss();
+                            Toast.makeText(MainActivity.this, "Error !", Toast.LENGTH_SHORT).show();
                         }
-
-                        @Override
-                        public int getItemCount() {
+                    } );
 
 
-                            return super.getItemCount();
-                        }
-
-
-
-                    };
-            recyclerView.setAdapter ( adapterrr );
-
-            adapterrr.startListening ();
 
 
 

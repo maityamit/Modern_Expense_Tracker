@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Expense Tracker</string>
+    <string name="app_name">Trip Expense Tracker</string>
     <string name="forgotpasssworddetails">Enter Your email address below and a password set up link will send to you shortly in your email</string>
     <string name="signinunderline"><u>Sign In</u></string>
     <string name="signupunderline"><u>Sign up</u></string>
