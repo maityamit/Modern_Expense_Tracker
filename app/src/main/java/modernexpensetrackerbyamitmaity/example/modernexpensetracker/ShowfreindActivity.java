@@ -145,6 +145,14 @@ public class ShowfreindActivity extends AppCompatActivity {
                         onlineStatt.put ( Trip_Key+"/Chat/"+chat_key+"/Chat",retrieveUserNAme1 +"\nwas added by "+retrieveUserNAme2+" .");
                         TripRef.updateChildren(onlineStatt);
 
+
+                        String cost_key = TripRef.child(Trip_Key).child("Member").child(user_key).child("Cost").push().getKey();
+                        HashMap<String,Object> onlineStat = new HashMap<> (  );
+                        onlineStat.put ( Trip_Key+"/Member/"+user_key+"/Cost/"+cost_key+"/Cost","0.0");
+                        TripRef.updateChildren(onlineStat);
+
+
+
                      progressDialog.dismiss();
 
                     }

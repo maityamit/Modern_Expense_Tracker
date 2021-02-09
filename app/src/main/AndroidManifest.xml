@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ModernExpenseTracker">
-        <activity android:name=".FreindsCostActivity"></activity>
         <activity android:name=".ShowfreindActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".RegisterActivity" />

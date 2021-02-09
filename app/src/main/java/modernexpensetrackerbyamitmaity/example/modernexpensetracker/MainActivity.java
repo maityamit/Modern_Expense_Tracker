@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.shreyaspatil.MaterialDialog.MaterialDialog;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         else
         {
             currentUserID = mAuth.getCurrentUser ().getUid ();
-            progressDialog.dismiss();
+            progressDialog.show();
             UserRef.child ( currentUserID ).addValueEventListener ( new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+            progressDialog.show();
 
             FirebaseRecyclerOptions<DODModel> optionsss =
                     new FirebaseRecyclerOptions.Builder<DODModel> ()
@@ -278,5 +280,35 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+    @Override
+    public void onBackPressed() {
+
+
+        MaterialDialog mDialog = new MaterialDialog.Builder ( this )
+                .setTitle ( "Are you sure you want to exit ?" )
+                .setCancelable ( false )
+                .setPositiveButton ( "Exit",R.drawable.ic_baseline_block_24, new MaterialDialog.OnClickListener () {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                        MainActivity.super.onBackPressed ();
+                    }
+
+
+                } )
+                .setNegativeButton ( "No", new MaterialDialog.OnClickListener () {
+                    @Override
+                    public void onClick(com.shreyaspatil.MaterialDialog.interfaces.DialogInterface dialogInterface, int which) {
+                        dialogInterface.cancel ();
+                    }
+
+                } )
+                .build ();
+
+        // Show Dialog
+        mDialog.show ();
+
+
+    }
+
 
 }

@@ -1,11 +1,13 @@
 package modernexpensetrackerbyamitmaity.example.modernexpensetracker;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -40,7 +42,7 @@ public class TripviewActivity extends AppCompatActivity {
 
     private TextView end_trip,trip_name,trip_cost,trip_person;
     private String trip_key;
-    private RecyclerView History,Memberlist,hmmrecycle;
+    private RecyclerView History,Memberlist,hmmrecycle,hmmrecycle4;
     private DatabaseReference RootRef,ChatRef,MemberRef,MainRef,CostRef;
     private LinearLayout history_layout,money_layout;
     private LinearLayout Add_Freind_Layout;
@@ -71,6 +73,7 @@ public class TripviewActivity extends AppCompatActivity {
         history_layout = findViewById(R.id.history_layout);
         money_layout = findViewById(R.id.money_layout);
         hmmrecycle = findViewById(R.id.hmmrecycle);
+        hmmrecycle4 = findViewById(R.id.hmmrecycle4);
         progressDialog = new ProgressDialog( TripviewActivity.this);
         progressDialog.setContentView ( R.layout.loading );
         RootRef =  FirebaseDatabase.getInstance ().getReference ().child ( "AllTrip" ).child(trip_key);
@@ -91,6 +94,7 @@ public class TripviewActivity extends AppCompatActivity {
         progressDialog.setMessage ( "Tips: Please Check your Internet or Wi-fi Connection" );
         History.setLayoutManager(new LinearLayoutManager(TripviewActivity.this));
         hmmrecycle.setLayoutManager(new LinearLayoutManager(TripviewActivity.this));
+        hmmrecycle4.setLayoutManager(new LinearLayoutManager(TripviewActivity.this));
 
         RetriveAllMoney();
         end_trip = findViewById(R.id.end_trip_button);
@@ -369,6 +373,96 @@ public class TripviewActivity extends AppCompatActivity {
                                         }
 
 
+                                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+
+
+                                                DatabaseReference db = MemberRef.child(stringperson).child("Cost");
+
+                                                FirebaseRecyclerOptions<MainMoneyModel> optionamitt =
+                                                        new FirebaseRecyclerOptions.Builder<MainMoneyModel> ()
+                                                                .setQuery (db,MainMoneyModel.class )
+                                                                .build ();
+
+
+                                                FirebaseRecyclerAdapter<MainMoneyModel, StudentViewHolderP> adaptt =
+                                                        new FirebaseRecyclerAdapter<MainMoneyModel,StudentViewHolderP> (optionamitt) {
+                                                            @Override
+                                                            protected void onBindViewHolder(@NonNull final StudentViewHolderP holder, final int position, @NonNull final MainMoneyModel model) {
+
+
+
+                                                                db.addValueEventListener ( new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                                                        int costnominal = (int)dataSnapshot.getChildrenCount();
+
+                                                                        float sum = 0;
+                                                                        for (int i = 0;i<costnominal;i++)
+                                                                        {
+
+                                                                            String df = getRef(i).getKey().toString();
+                                                                            String stringo = dataSnapshot.child(df).child("Cost").getValue().toString();
+                                                                            float fl = Float.parseFloat(stringo);
+                                                                            sum = sum+fl;
+
+                                                                        }
+
+                                                                        String fg = String.valueOf(sum);
+
+                                                                        CreateALertDialog(fg);
+
+
+
+
+
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                                        progressDialog.dismiss();
+                                                                        Toast.makeText(TripviewActivity.this, "Error !", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                } );
+
+
+
+
+
+
+
+
+
+
+                                                            }
+
+                                                            @NonNull
+                                                            @Override
+                                                            public StudentViewHolderP onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+                                                                View view  = LayoutInflater.from ( viewGroup.getContext () ).inflate ( R.layout.trip_member_view_layout,viewGroup,false );
+                                                                StudentViewHolderP viewHolder  = new StudentViewHolderP(  view);
+                                                                return viewHolder;
+
+                                                            }
+
+
+
+                                                        };
+                                                hmmrecycle4.setAdapter(adaptt);
+                                                adaptt.startListening ();
+
+
+
+
+
+
+                                            }
+                                        });
+
+
                                         holder.name.setText ( retrieveUserNAmeer );
                                         progressDialog.dismiss ();
 
@@ -489,6 +583,28 @@ public class TripviewActivity extends AppCompatActivity {
 
 
 
+
+
+    }
+
+    private void CreateALertDialog(String fg) {
+
+        new AlertDialog.Builder(TripviewActivity.this)
+                .setTitle("His/ Her Total Spend is :")
+                .setMessage("₹: "+fg+"0")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
 
 
     }
