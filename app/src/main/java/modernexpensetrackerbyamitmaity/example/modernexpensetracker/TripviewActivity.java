@@ -573,18 +573,6 @@ public class TripviewActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     private void CreateALertDialog(String fg) {

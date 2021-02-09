@@ -1,5 +1,6 @@
 package modernexpensetrackerbyamitmaity.example.modernexpensetracker;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -25,17 +26,16 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class CreateTripCustomDialogClass extends Dialog implements
         android.view.View.OnClickListener {
 
     public Activity c;
-    public Dialog d;
     public Button yes,no;
     private EditText tripname;
     private String currentUserID;
     private ProgressDialog progressDialog;
-    private FirebaseAuth mAuth;
     private DatePicker datepicker;
     private DatabaseReference RootRef;
     public CreateTripCustomDialogClass(Activity a) {
@@ -48,8 +48,8 @@ public class CreateTripCustomDialogClass extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_create_trip_layout);
-        mAuth= FirebaseAuth.getInstance ();
-        currentUserID = mAuth.getCurrentUser ().getUid ();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        currentUserID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid ();
         RootRef= FirebaseDatabase.getInstance ().getReference ();
 
 
@@ -68,26 +68,34 @@ public class CreateTripCustomDialogClass extends Dialog implements
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String trip_key = RootRef.child("AllTrip").push().getKey();
-                CreteATripNew(trip_key);
-                Intent loginIntent = new Intent ( getContext(),MainActivity.class );
-                loginIntent.addFlags ( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                getContext().startActivity ( loginIntent );
+
+                YESONCLICK();
             }
         });
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginIntent = new Intent ( getContext(),MainActivity.class );
-                loginIntent.addFlags ( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                getContext().startActivity ( loginIntent );
+                NOONCLICK();
             }
         });
 
     }
 
-    private void CreteATripNew(String string_trip) {
+    private void NOONCLICK() {
+        Intent loginIntent = new Intent ( getContext(),MainActivity.class );
+        loginIntent.addFlags ( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        getContext().startActivity ( loginIntent );
+    }
 
+    private void YESONCLICK() {
+        String trip_key = RootRef.child("AllTrip").push().getKey();
+        CreteATripNew(trip_key);
+        Intent loginIntent = new Intent ( getContext(),MainActivity.class );
+        loginIntent.addFlags ( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+        getContext().startActivity ( loginIntent );
+    }
+
+    private void CreteATripNew(String string_trip) {
 
         int year = datepicker.getYear();
         int month = datepicker.getMonth();
@@ -95,7 +103,7 @@ public class CreateTripCustomDialogClass extends Dialog implements
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
 
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String strDate = format.format(calendar.getTime());
         String string = tripname.getText().toString();
 
@@ -154,15 +162,6 @@ public class CreateTripCustomDialogClass extends Dialog implements
                         }
                     } );
         }
-
-
-
-
-
-
-
-
-
 
 
     }

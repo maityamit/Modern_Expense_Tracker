@@ -25,8 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextView signup,forgotpass;
     private Button submit;
     private FirebaseAuth mAuth;
-    private String currentUserID;
-    private DatabaseReference RootRef;
     private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance ();
-        RootRef = FirebaseDatabase.getInstance ().getReference ();
         progressDialog = new ProgressDialog (this);
         progressDialog.setContentView ( R.layout.loading );
         progressDialog.setTitle ( "Please Wait" );

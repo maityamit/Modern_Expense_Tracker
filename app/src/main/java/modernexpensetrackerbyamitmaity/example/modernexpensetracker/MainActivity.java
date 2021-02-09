@@ -34,7 +34,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     private ExtendedFloatingActionButton crreat_trip;
-    private String m_Text = "";
     private FirebaseAuth mAuth;
     private String currentUserID;
     private DatabaseReference UserRef,MainRef,RootRef;
@@ -50,18 +49,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance ();
-        progressDialog = new ProgressDialog( MainActivity.this);
-        progressDialog.setContentView ( R.layout.loading );
-        circleImageView = findViewById(R.id.Home_Profile_Image);
         RootRef =  FirebaseDatabase.getInstance ().getReference ().child ( "AllTrip" );
         UserRef= FirebaseDatabase.getInstance ().getReference ().child ( "Users" );
         MainRef= FirebaseDatabase.getInstance ().getReference ();
-        progressDialog.setTitle ( "Please Wait..." );
-        recyclerView = findViewById(R.id.ALLTripRecyclerView);
-        Expensetracker = findViewById(R.id.expense_tracker);
-        progressDialog.setCanceledOnTouchOutside ( false );
-        progressDialog.setMessage ( "Tips: Please Check your Internet or Wi-fi Connection" );
-        crreat_trip = findViewById(R.id.create_button);
+
+        INITIALIZATIONFN();
+
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         crreat_trip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,9 +94,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-
+    private void INITIALIZATIONFN() {
+        progressDialog = new ProgressDialog( MainActivity.this);
+        progressDialog.setContentView ( R.layout.loading );
+        circleImageView = findViewById(R.id.Home_Profile_Image);
+        progressDialog.setTitle ( "Please Wait..." );
+        recyclerView = findViewById(R.id.ALLTripRecyclerView);
+        Expensetracker = findViewById(R.id.expense_tracker);
+        progressDialog.setCanceledOnTouchOutside ( false );
+        progressDialog.setMessage ( "Tips: Please Check your Internet or Wi-fi Connection" );
+        crreat_trip = findViewById(R.id.create_button);
+    }
 
 
     @Override

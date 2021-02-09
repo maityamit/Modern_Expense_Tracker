@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,17 +18,15 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     private Button submit;
-    private FirebaseAuth mAuth;
     private EditText email;
     private TextView confirm;
-    private String string ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        mAuth= FirebaseAuth.getInstance ();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         submit = findViewById(R.id.forgot_email_button);
         email = findViewById(R.id.forgot_email);
@@ -48,7 +47,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     {
 
         String stringo = email.getText().toString();
-        if (stringo.equals(null))
+        if (TextUtils.isEmpty(stringo))
         {
             Toast.makeText(ForgotPasswordActivity.this, "Enter the Email Address..", Toast.LENGTH_SHORT).show();
         }
