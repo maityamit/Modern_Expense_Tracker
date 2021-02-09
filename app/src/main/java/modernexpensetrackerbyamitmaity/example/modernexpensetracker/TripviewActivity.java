@@ -40,7 +40,7 @@ public class TripviewActivity extends AppCompatActivity {
 
     private TextView end_trip,trip_name,trip_cost,trip_person;
     private String trip_key;
-    private RecyclerView History,Memberlist;
+    private RecyclerView History,Memberlist,hmmrecycle;
     private DatabaseReference RootRef,ChatRef,MemberRef,MainRef,CostRef;
     private LinearLayout history_layout,money_layout;
     private LinearLayout Add_Freind_Layout;
@@ -48,7 +48,6 @@ public class TripviewActivity extends AppCompatActivity {
     public Button yes;
     private FirebaseAuth mAuth;
     private String currentUserID;
-    private int as=1,am=1;
     private EditText moneyamount,moneypurpose;
 
     private ExtendedFloatingActionButton trip_add_money_buton;
@@ -71,6 +70,7 @@ public class TripviewActivity extends AppCompatActivity {
 
         history_layout = findViewById(R.id.history_layout);
         money_layout = findViewById(R.id.money_layout);
+        hmmrecycle = findViewById(R.id.hmmrecycle);
         progressDialog = new ProgressDialog( TripviewActivity.this);
         progressDialog.setContentView ( R.layout.loading );
         RootRef =  FirebaseDatabase.getInstance ().getReference ().child ( "AllTrip" ).child(trip_key);
@@ -90,7 +90,9 @@ public class TripviewActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside ( false );
         progressDialog.setMessage ( "Tips: Please Check your Internet or Wi-fi Connection" );
         History.setLayoutManager(new LinearLayoutManager(TripviewActivity.this));
+        hmmrecycle.setLayoutManager(new LinearLayoutManager(TripviewActivity.this));
 
+        RetriveAllMoney();
         end_trip = findViewById(R.id.end_trip_button);
         trip_add_money_buton = findViewById(R.id.trip_add_money_button);
         trip_add_money_buton.setOnClickListener(new View.OnClickListener() {
@@ -163,42 +165,16 @@ public class TripviewActivity extends AppCompatActivity {
         });
 
         RetriveAlltheData();
-        RetriveAllMoney();
+
     }
 
     private void RetriveAllMoney() {
 
-         RootRef.addValueEventListener ( new ValueEventListener() {
-            @Override
-           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                float sum = 0;
-                int costnominal = (int)dataSnapshot.child("Cost").getChildrenCount();
-                for (int i = 1;i<=costnominal;i++)
-                {
-
-                    String stringo = dataSnapshot.child("Cost").child(String.valueOf(i)).child("Cost").getValue().toString();
-                    float fl = Float.parseFloat(stringo);
-                    sum = sum+fl;
-
-                }
-
-                String fg = String.valueOf(sum);
-                trip_cost.setText("₹: "+fg+"0");
 
 
 
 
 
-          }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                progressDialog.dismiss();
-               Toast.makeText(TripviewActivity.this, "Error !", Toast.LENGTH_SHORT).show();
-                                    }
-            } );
 
 
 
@@ -231,29 +207,11 @@ public class TripviewActivity extends AppCompatActivity {
                             String retrieveUserNAme = dataSnapshot.child ( "Name" ).getValue ().toString ();
 
 
-                            RootRef.addValueEventListener ( new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshottt) {
-
-
-
-
-
-
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            progressDialog.dismiss();
-                                            Toast.makeText(TripviewActivity.this, "Error !", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } );
 
                             String trip_key_chat = RootRef.child("Chat").push().getKey();
-                            RootRef.child("Cost").child(String.valueOf(as+1)).child("Cost").setValue(string1);
-                            RootRef.child("Member").child(currentUserID).child("Cost").child(String.valueOf(am+1)).child("Cost").setValue(string1);
+                            String trip_key_cost = RootRef.child("Cost").push().getKey();
+                            RootRef.child("Cost").child(trip_key_cost).child("Cost").setValue(string1);
+                            RootRef.child("Member").child(currentUserID).child("Cost").child(trip_key_cost).child("Cost").setValue(string1);
                             RootRef.child("Chat").child(trip_key_chat).child("Chat").setValue(saveCurrentData+" "+saveCurrentTime+"\n"+retrieveUserNAme+" spend ₹:"+string1+" for "+string2);
 
                             history_layout.setVisibility(View.VISIBLE);
@@ -262,14 +220,15 @@ public class TripviewActivity extends AppCompatActivity {
                             moneypurpose.setText(null);
                             progressDialog.dismiss ();
 
+
+
+
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                             progressDialog.dismiss();
-                            history_layout.setVisibility(View.VISIBLE);
-                            money_layout.setVisibility(View.GONE);
                             Toast.makeText(TripviewActivity.this, "Error !", Toast.LENGTH_SHORT).show();
                         }
                     } );
@@ -448,6 +407,87 @@ public class TripviewActivity extends AppCompatActivity {
 
 
 
+        FirebaseRecyclerOptions<MainMoneyModel> optionamitt =
+                new FirebaseRecyclerOptions.Builder<MainMoneyModel> ()
+                        .setQuery ( CostRef,MainMoneyModel.class )
+                        .build ();
+
+
+        FirebaseRecyclerAdapter<MainMoneyModel, StudentViewHolderP> adaptt =
+                new FirebaseRecyclerAdapter<MainMoneyModel,StudentViewHolderP> (optionamitt) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull final StudentViewHolderP holder, final int position, @NonNull final MainMoneyModel model) {
+
+
+                        RootRef.addValueEventListener ( new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                int costnominal = (int)dataSnapshot.child("Cost").getChildrenCount();
+
+                                float sum = 0;
+                                for (int i = 0;i<costnominal;i++)
+                                {
+
+                                    String df = getRef(i).getKey().toString();
+                                    String stringo = dataSnapshot.child("Cost").child(df).child("Cost").getValue().toString();
+                                    float fl = Float.parseFloat(stringo);
+                                    sum = sum+fl;
+
+                                }
+
+                                String fg = String.valueOf(sum);
+                                trip_cost.setText("₹: "+fg+"0");
+
+
+
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                progressDialog.dismiss();
+                                Toast.makeText(TripviewActivity.this, "Error !", Toast.LENGTH_SHORT).show();
+                            }
+                        } );
+
+
+
+
+
+
+
+                    }
+
+                    @NonNull
+                    @Override
+                    public StudentViewHolderP onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+                        View view  = LayoutInflater.from ( viewGroup.getContext () ).inflate ( R.layout.trip_member_view_layout,viewGroup,false );
+                        StudentViewHolderP viewHolder  = new StudentViewHolderP(  view);
+                        return viewHolder;
+
+                    }
+
+
+
+                };
+        hmmrecycle.setAdapter(adaptt);
+        adaptt.startListening ();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -474,6 +514,16 @@ public class TripviewActivity extends AppCompatActivity {
             super ( itemView );
             name = itemView.findViewById ( R.id.trip_view_layout_name);
             circleImageView = itemView.findViewById ( R.id.trip_view_layout_image);
+
+
+        }
+    }
+    public static class StudentViewHolderP extends  RecyclerView.ViewHolder
+    {
+
+        public StudentViewHolderP(@NonNull View itemView) {
+            super ( itemView );
+
 
 
         }

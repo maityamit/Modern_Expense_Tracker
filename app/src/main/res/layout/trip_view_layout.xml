@@ -72,21 +72,19 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:layout_weight="4"
+                android:layout_weight="5"
                 android:orientation="horizontal">
 
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/date_image"
-                    android:layout_weight="1"/>
+                    android:src="@drawable/date_image"/>
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
                     android:id="@+id/trip_view_trip_date"
                     android:textSize="15sp"
                     android:textColor="#4CAF50"
@@ -98,7 +96,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:layout_weight="3"
+                android:layout_weight="5"
                 android:orientation="horizontal">
 
 
@@ -107,42 +105,24 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/people_image"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Member:    "/>
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
                     android:id="@+id/trip_view_trip_person"
+                    android:textStyle="bold"
                     android:textColor="#4CAF50"
                     android:textSize="15sp"
                     android:text="12"/>
 
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
 
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/money_image"/>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/trip_view_trip_cost"
-                    android:textSize="15sp"
-                    android:textColor="#4CAF50"
-                    android:text="1400.00"/>
-
-
-            </LinearLayout>
 
 
 

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private String currentUserID;
     private DatabaseReference UserRef,MainRef,RootRef;
     private ProgressDialog progressDialog;
+    String fg = "0.0";
     private CircleImageView circleImageView;
     private TextView Expensetracker;
     private RecyclerView recyclerView;
@@ -186,52 +187,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                                            RootRef.child(stringkey).addValueEventListener ( new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                                    if ((dataSnapshot.child("Cost")).exists())
-                                                    {
-                                                        float sum = 0;
-                                                        int costnominal = (int)dataSnapshot.child("Cost").getChildrenCount();
-                                                        for (int i = 1;i<=costnominal;i++)
-                                                        {
-
-                                                            String stringo = dataSnapshot.child("Cost").child(String.valueOf(i)).child("Cost").getValue().toString();
-                                                            float fl = Float.parseFloat(stringo);
-                                                            sum = sum+fl;
-
-                                                        }
-
-                                                        String fg = String.valueOf(sum);
-                                                        holder.cost.setText("₹: "+fg+"0");
-                                                    }
-                                                    else {
-                                                        holder.cost.setText("₹: "+"0.00");
-                                                    }
-
-
-
-
-
-
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                    progressDialog.dismiss();
-                                                    Toast.makeText(MainActivity.this, "Error !", Toast.LENGTH_SHORT).show();
-                                                }
-                                            } );
-
-
-
-
-
-
-
-
 
                                             progressDialog.dismiss();
 
@@ -314,14 +269,14 @@ public class MainActivity extends AppCompatActivity {
     public static class StudentViewHolderX extends  RecyclerView.ViewHolder
     {
 
-        TextView name,date,person,cost;
+        TextView name,date,person;
         public StudentViewHolderX(@NonNull View itemView) {
             super ( itemView );
             name = itemView.findViewById ( R.id.trip_view_trip_name);
             date = itemView.findViewById ( R.id.trip_view_trip_date);
             person = itemView.findViewById ( R.id.trip_view_trip_person);
-            cost = itemView.findViewById ( R.id.trip_view_trip_cost);
 
         }
     }
+
 }

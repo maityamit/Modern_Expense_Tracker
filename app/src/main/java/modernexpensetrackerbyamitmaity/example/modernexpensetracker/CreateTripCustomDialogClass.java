@@ -133,9 +133,14 @@ public class CreateTripCustomDialogClass extends Dialog implements
                             RootRef.child ( "AllTrip" ).child (string_trip )
                                     .updateChildren ( onlineStat );
                             String chat_key = RootRef.child("AllTrip").child(string_trip).child("Chat").push().getKey();
+                            String trip_key_cost = RootRef.child("AllTrip").child(string_trip).child("Cost").push().getKey();
+                            String trip_key_memeber = RootRef.child("AllTrip").child(string_trip).child("Member").child(currentUserID).child("Cost").push().getKey();
+
                             HashMap<String,Object> onlineStatt = new HashMap<> (  );
                             onlineStatt.put ( "AllTrip/"+string_trip+"/Chat/"+chat_key+"/Chat", SaveCurrentData+"\n"+retrieveUserNAme+" created this trip");
                             onlineStatt.put("Users/"+currentUserID+"/MyTrip/"+string_trip+"/ID",string_trip);
+                            onlineStatt.put("AllTrip/"+string_trip+"/Cost/"+trip_key_cost+"/Cost","0.0");
+                            onlineStatt.put("AllTrip/"+string_trip+"/Member/"+currentUserID+"/Cost/"+trip_key_memeber+"/Cost","0.0");
                             RootRef.updateChildren(onlineStatt);
                             tripname.setText(null);
                             progressDialog.dismiss();
