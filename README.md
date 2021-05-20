@@ -6,11 +6,13 @@ Track all of your expenses
 ## Scan QR Code
 
  <img src="https://github.com/maityamit/Modern_Expense_Tracker/blob/master/Demo/QR%20Code.svg"
-width="200" height="200"> 
+width="120" height="120"> 
 ---------------
-## Download the Apk
+## Download Via Link
 
-Get Apk <b>[Download here](https://drive.google.com/file/d/1tUWuqxxeHurkYovsm5wesxy8wk1dZ9Gl/view?usp=sharing)</b>
+<a href="https://drive.google.com/file/d/1tUWuqxxeHurkYovsm5wesxy8wk1dZ9Gl/view?usp=sharing" target="_blank"><img src="https://github.com/maityamit/Modern_Expense_Tracker/blob/master/Demo/download_image.jpg"
+width="120" height="120"></a>
+
 
 # ⚙️ Features 
 1. See all the Trips you present
