@@ -1,62 +1,52 @@
 package modernexpensetrackerbyamitmaity.example.modernexpensetracker;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.material.tabs.TabLayout;
 import com.shreyaspatil.MaterialDialog.MaterialDialog;
-import com.squareup.picasso.Picasso;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class MainActivity extends AppCompatActivity {
+
+    TabLayout tabLayout;
+
+
+    Toolbar myToolbar;
+    ViewPager viewPager;
+    MyTripAdapter adapter;
     private ExtendedFloatingActionButton crreat_trip;
-    private FirebaseAuth mAuth;
-    private String currentUserID;
-    private DatabaseReference UserRef,MainRef,RootRef;
-    private ProgressDialog progressDialog;
-    private ImageView imageView1;
-    String fg = "0.0";
-    private CircleImageView circleImageView;
-    private TextView Expensetracker;
-    private RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance ();
-        RootRef =  FirebaseDatabase.getInstance ().getReference ().child ( "AllTrip" );
-        UserRef= FirebaseDatabase.getInstance ().getReference ().child ( "Users" );
-        MainRef= FirebaseDatabase.getInstance ().getReference ();
 
-        INITIALIZATIONFN();
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager=(ViewPager)findViewById(R.id.viewPager);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        tabLayout.addTab(tabLayout.newTab().setText("Current"));
+        tabLayout.addTab(tabLayout.newTab().setText("Next"));
+        tabLayout.addTab(tabLayout.newTab().setText("History"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        myToolbar.setTitle("Expense Tracker");
+
+
+
+        crreat_trip = findViewById(R.id.create_button);
+
         crreat_trip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,266 +54,51 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        adapter = new MyTripAdapter(this,getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
 
-        circleImageView.setOnClickListener(new View.OnClickListener() {
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                Intent intenty = new Intent(MainActivity.this,MyprofileActivity.class);
-                startActivity(intenty);
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
             }
-        });
-        Expensetracker.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Project Creator and Developer")
-                        .setMessage("Amit Maity")
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
+            }
 
-                        .setIcon(R.drawable.me)
-                        .show();
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 
 
-    }
 
-    private void INITIALIZATIONFN() {
-        imageView1 = findViewById(R.id.no_trip);
-        progressDialog = new ProgressDialog( MainActivity.this);
-        progressDialog.setContentView ( R.layout.loading );
-        circleImageView = findViewById(R.id.Home_Profile_Image);
-        progressDialog.setTitle ( "Please Wait..." );
-        recyclerView = findViewById(R.id.ALLTripRecyclerView);
-        Expensetracker = findViewById(R.id.expense_tracker);
-        progressDialog.setCanceledOnTouchOutside ( false );
-        progressDialog.setMessage ( "Tips: Please Check your Internet or Wi-fi Connection" );
-        crreat_trip = findViewById(R.id.create_button);
     }
 
 
     @Override
-    protected void onStart() {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 
-        super.onStart();
-
-
-        progressDialog.show();
-        FirebaseUser currentUser = mAuth.getCurrentUser ();
-
-        if (currentUser == null)
-        {
-
-            SendUserToLoginActivity();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.menu_new_content_facebook){
+            Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+        }else if(id == R.id.menu_new_content_twitter){
+            Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
         }
-        else
-        {
-            currentUserID = mAuth.getCurrentUser ().getUid ();
-            progressDialog.show();
-            UserRef.child ( currentUserID ).addValueEventListener ( new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                    if ((dataSnapshot.exists ()) && (dataSnapshot.hasChild ( "Image" )))
-                    {
-                        String StudentNamea = dataSnapshot.child ("Image" ).getValue ().toString ();
-
-                        Picasso.get ().load ( StudentNamea ).placeholder ( R.drawable.profile_image ).error ( R.drawable.profile_image ).into ( circleImageView );
-                    }
-
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    progressDialog.dismiss ();
-                }
-            } );
-
-
-
-            DatabaseReference DODREF = FirebaseDatabase.getInstance ().getReference ().child("Users").child(currentUserID).child("MyTrip");
-
-
-
-            progressDialog.show();
-
-
-            DODREF.addValueEventListener ( new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            int r  = (int)dataSnapshot.getChildrenCount();
-
-                            if (r==0)
-                            {
-                                imageView1.setVisibility(View.VISIBLE);
-                                recyclerView.setVisibility(View.GONE);
-                                progressDialog.dismiss();
-                            }
-                            else
-                            {
-                                progressDialog.show();
-
-                                FirebaseRecyclerOptions<DODModel> optionsss =
-                                        new FirebaseRecyclerOptions.Builder<DODModel> ()
-                                                .setQuery ( DODREF,DODModel.class )
-                                                .build ();
-
-
-                                FirebaseRecyclerAdapter<DODModel, StudentViewHolderX> adapterrr =
-                                        new FirebaseRecyclerAdapter<DODModel, StudentViewHolderX> (optionsss) {
-                                            @Override
-                                            protected void onBindViewHolder(@NonNull final StudentViewHolderX holder, final int position, @NonNull final DODModel model) {
-
-                                                progressDialog.show();
-
-
-
-
-
-
-
-
-                                                String st = model.getID();
-
-                                                MainRef.child ( "AllTrip" ).child ( st )
-                                                        .addValueEventListener ( new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-
-
-                                                                String stringkey = getRef(position).getKey().toString();
-                                                                String retrieveUserNAme = dataSnapshot.child ( "TripName" ).getValue ().toString ();
-                                                                String retrieveEmail = dataSnapshot.child ( "TripDate" ).getValue ().toString ();
-                                                                String stringperson = String.valueOf((int)dataSnapshot.child("Member").getChildrenCount());
-
-                                                                holder.name.setText(retrieveUserNAme);
-                                                                holder.date.setText(retrieveEmail);
-                                                                holder.person.setText(stringperson);
-
-
-
-
-                                                                progressDialog.dismiss();
-
-                                                                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                                                    @Override
-                                                                    public void onClick(View v) {
-                                                                        Intent intenti = new Intent(MainActivity.this,TripviewActivity.class);
-                                                                        intenti.putExtra("TRIPID",stringkey);
-                                                                        startActivity(intenti);
-                                                                    }
-                                                                });
-                                                            }
-
-                                                            @Override
-                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                                progressDialog.dismiss();
-                                                                Toast.makeText(MainActivity.this, "Error !", Toast.LENGTH_SHORT).show();
-                                                            }
-                                                        } );
-
-
-
-                                            }
-
-                                            @NonNull
-                                            @Override
-                                            public StudentViewHolderX onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-                                                View view  = LayoutInflater.from ( viewGroup.getContext () ).inflate ( R.layout.trip_view_layout,viewGroup,false );
-                                                StudentViewHolderX viewHolder  = new StudentViewHolderX (  view);
-                                                return viewHolder;
-
-                                            }
-
-                                            @Override
-                                            public int getItemCount() {
-
-
-                                                return super.getItemCount();
-                                            }
-
-
-
-                                        };
-                                recyclerView.setAdapter ( adapterrr );
-
-                                adapterrr.startListening ();
-
-
-
-
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            progressDialog.dismiss();
-                            Toast.makeText(MainActivity.this, "Error !", Toast.LENGTH_SHORT).show();
-                        }
-                    } );
-
-
-
-
-
-
-
-
-
-
-
-
-        }
+        return super.onOptionsItemSelected(item);
     }
 
 
-
-    private void SendUserToLoginActivity() {
-
-
-        Intent loginIntent = new Intent ( MainActivity.this,LoginActivity.class );
-        loginIntent.addFlags ( Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-        startActivity ( loginIntent );
-        finish ();
-    }
-
-
-    private void CreteATripFunction() {
-        CreateTripCustomDialogClass cdd=new CreateTripCustomDialogClass(MainActivity.this);
-        cdd.show();
-
-    }
-
-
-    public static class StudentViewHolderX extends  RecyclerView.ViewHolder
-    {
-
-        TextView name,date,person;
-        public StudentViewHolderX(@NonNull View itemView) {
-            super ( itemView );
-            name = itemView.findViewById ( R.id.trip_view_trip_name);
-            date = itemView.findViewById ( R.id.trip_view_trip_date);
-            person = itemView.findViewById ( R.id.trip_view_trip_person);
-
-        }
-    }
     @Override
     public void onBackPressed() {
 
@@ -354,5 +129,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void CreteATripFunction() {
+        CreateTripCustomDialogClass cdd=new CreateTripCustomDialogClass(MainActivity.this);
+        cdd.show();
+
+    }
 
 }

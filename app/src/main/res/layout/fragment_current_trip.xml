@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CurrentTripFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/amar_bapi"
+        android:background="#2180F3"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="15dp">
+
+            <TextView
+                android:id="@+id/expense_tracker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Expense Tracker"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:background="@drawable/sequerechoiceback"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:textSize="15sp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:padding="8dp"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/Home_Profile_Image"
+                android:layout_width="45dp"
+                app:civ_border_color="@android:color/black"
+                app:civ_border_width="1dp"
+                android:layout_height="45dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/profile_image"/>
+
+
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ALLTripRecyclerView"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/amar_bapi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+    <ImageView
+        android:id="@+id/no_trip"
+        android:visibility="gone"
+        android:layout_below="@id/amar_bapi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/no_trip"
+        android:scaleType="fitXY"/>
+
+
+
+
+
+</RelativeLayout>

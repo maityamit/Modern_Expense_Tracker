@@ -4,5 +4,7 @@
     <string name="signinunderline"><u>Sign In</u></string>
     <string name="signupunderline"><u>Sign up</u></string>
     <string name="termsperivacystring">By signing up, you agree to our  <u>Terms of Use</u> and <u>Privacy Policy</u></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

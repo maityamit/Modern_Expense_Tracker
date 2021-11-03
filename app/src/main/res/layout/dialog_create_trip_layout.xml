@@ -29,22 +29,40 @@
             <EditText
                 android:id="@+id/edit_text_trip_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/quary_input"
+                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@android:color/black"
+                android:inputType="textShortMessage"
+                android:paddingStart="10dp"
+                android:hint="Trip Name"
+                android:layout_marginEnd="10dp"/>
+
+            <EditText
+                android:id="@+id/edit_text_trip_passcode"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:inputType="numberPassword"
+                android:textColor="@android:color/black"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/quary_input"
                 android:padding="5dp"
                 android:layout_marginTop="5dp"
                 android:paddingStart="10dp"
-                android:hint="Trip Name"
+                android:hint="Trip Password"
                 android:layout_marginEnd="10dp"/>
 
             <DatePicker
                 android:id="@+id/edit_text_trip_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"/>
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="20dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -60,6 +78,7 @@
                     android:backgroundTint="#FFFFFF"
                     android:textColor="#F44336"
                     android:text="Cancel"
+                    android:textSize="17sp"
                     android:textAllCaps="false"
                     android:layout_marginStart="20dp"/>
 
@@ -68,6 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
+                    android:textSize="17sp"
                     android:layout_alignParentEnd="true"
                     android:text="Submit"
                     android:textAllCaps="false"
