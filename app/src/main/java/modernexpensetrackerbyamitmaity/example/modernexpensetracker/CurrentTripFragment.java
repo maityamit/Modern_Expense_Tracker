@@ -38,10 +38,7 @@ public class CurrentTripFragment extends Fragment {
     private String currentUserID;
     private DatabaseReference UserRef,MainRef,RootRef;
     private ProgressDialog progressDialog;
-    private ImageView imageView1;
     String fg = "0.0";
-    private CircleImageView circleImageView;
-    private TextView Expensetracker;
     private RecyclerView recyclerView;
 
     @Override
@@ -55,13 +52,10 @@ public class CurrentTripFragment extends Fragment {
         UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
         MainRef = FirebaseDatabase.getInstance().getReference();
 
-        imageView1 = view.findViewById(R.id.no_trip);
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setContentView(R.layout.loading);
-        circleImageView = view.findViewById(R.id.Home_Profile_Image);
         progressDialog.setTitle("Please Wait...");
         recyclerView = view.findViewById(R.id.ALLTripRecyclerView);
-        Expensetracker = view.findViewById(R.id.expense_tracker);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Tips: Please Check your Internet or Wi-fi Connection");
 
@@ -70,32 +64,8 @@ public class CurrentTripFragment extends Fragment {
 
 
 
-        circleImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intenty = new Intent(getContext(), MyprofileActivity.class);
-                startActivity(intenty);
-            }
-        });
-        Expensetracker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Project Creator and Developer")
-                        .setMessage("Amit Maity")
 
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
 
-                        .setIcon(R.drawable.me)
-                        .show();
-            }
-        });
 
         return  view;
 
@@ -122,27 +92,7 @@ public class CurrentTripFragment extends Fragment {
         {
             currentUserID = mAuth.getCurrentUser ().getUid ();
             progressDialog.show();
-            UserRef.child ( currentUserID ).addValueEventListener ( new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
-                    if ((dataSnapshot.exists ()) && (dataSnapshot.hasChild ( "Image" )))
-                    {
-                        String StudentNamea = dataSnapshot.child ("Image" ).getValue ().toString ();
-
-                        Picasso.get ().load ( StudentNamea ).placeholder ( R.drawable.profile_image ).error ( R.drawable.profile_image ).into ( circleImageView );
-                    }
-
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    progressDialog.dismiss ();
-                }
-            } );
 
 
 
@@ -161,7 +111,6 @@ public class CurrentTripFragment extends Fragment {
 
                     if (r==0)
                     {
-                        imageView1.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                         progressDialog.dismiss();
                     }
